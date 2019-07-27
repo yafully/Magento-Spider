@@ -3,7 +3,7 @@ const request = require('request-promise');
 const cheerio = require('cheerio');
 const debug = require('debug')('spider:readCatalogs');
 const fs = require('fs');
-module.exports = async function (url) {
+module.exports = async function (url,catalogSelector) {
     let options = {
         url,
         transform: function(body){
@@ -12,7 +12,7 @@ module.exports = async function (url) {
     }
     let $ = await request(options);
 
-    let menuItems = $('#menuSc a');
+    let menuItems = $(catalogSelector);
     
     let catalogs = [];
     menuItems.each((index,item)=>{

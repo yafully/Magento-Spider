@@ -3,7 +3,7 @@ const request = require('request-promise');
 const cheerio = require('cheerio');
 const debug = require('debug')('spider:readProducts');
 const fs = require('fs');
-module.exports = async function (url) {
+module.exports = async function (url, detailSelector) {
     let options = {
         url,
         transform: function(body){
@@ -12,7 +12,7 @@ module.exports = async function (url) {
     }
     let $ = await request(options);
 
-    let menuItems = $('#listScope .name_s');
+    let menuItems = $(detailSelector);
     let products = [];
     //这里不能用each循环因为不能支持async会至网络崩溃
     for(let i=0;i<menuItems.length;i++){
