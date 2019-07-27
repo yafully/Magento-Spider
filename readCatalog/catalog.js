@@ -1,7 +1,7 @@
 //读取分类
 const request = require('request-promise');
 const cheerio = require('cheerio');
-const debug = require('debug')('crawl:readCatalog:catalog');
+const debug = require('debug')('spider:readCatalogs');
 const fs = require('fs');
 module.exports = async function (url) {
     let options = {
@@ -16,16 +16,17 @@ module.exports = async function (url) {
     
     let catalogs = [];
     menuItems.each((index,item)=>{
+
         let $this = $(item);
         
-        let url = $this.attr('href'),name = $this.text();
+        let url = $this.attr('href'),name = $this.text();console.log(`======${name}====`);
         if(url !=='' && url !=='javascript:;'){
             catalogs.push({
                 'catalogName':name,
                 'url':url
             });
+            debug(`读取分类：${name}`);
         }
-        
     });
     return catalogs;
     //catUrls.join('\r\n');

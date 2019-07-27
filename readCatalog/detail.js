@@ -1,7 +1,7 @@
 //读取分类
 const request = require('request-promise');
 const cheerio = require('cheerio');
-const debug = require('debug')('crawl:readCatalog:detail');
+const debug = require('debug')('spider:readProducts');
 const fs = require('fs');
 module.exports = async function (url) {
     let options = {
@@ -25,6 +25,7 @@ module.exports = async function (url) {
                 'url':url,
                 'sku':sku
             });
+            debug(`读取产品：${sku} -- ${name}`);
         }
     }
     //products.join('\r\n');
@@ -35,7 +36,6 @@ module.exports = async function (url) {
 }
 
 async function readDetail(url){
-    console.log(url);
     let options = {
         url,
         transform: function(body){
